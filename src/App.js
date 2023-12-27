@@ -92,11 +92,9 @@ const App = () => {
     fetchCategories();
   }, []);
 
-  const MAX_QUESTIONS = 35;
-
   const startQuiz = async () => {
     const response = await axios.get(
-      `https://opentdb.com/api.php?amount=${MAX_QUESTIONS}&category=${selectedCategory}&type=multiple`
+      `https://opentdb.com/api.php?amount=4&category=${selectedCategory}&type=multiple`
     );
     setQuestions(response.data.results);
   };
@@ -197,7 +195,6 @@ const App = () => {
           ))}
           <div className="d-flex justify-content-between">
             <Button onClick={submitQuiz}>Submit Quiz</Button>
-            {score > 0 && <Button onClick={restartQuiz}>Restart Quiz</Button>}
           </div>
         </div>
       )}
@@ -221,14 +218,6 @@ const App = () => {
           <h2>Your Quiz Results</h2>
           <p>Correct Answers: {score}</p>
           <p>Incorrect Answers: {questionNumber - score}</p>
-          <h3>Details:</h3>
-          <ul>
-            {questions.map((question, index) => (
-              <li key={index}>
-                {question.question} - {userAnswers[index] === question.correct_answer ? 'Correct' : 'Incorrect'}
-              </li>
-            ))}
-          </ul>
           <Button onClick={closeModal}>Close</Button>
         </ModalContent>
       </Modal>
